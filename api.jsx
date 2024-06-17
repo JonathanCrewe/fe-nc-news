@@ -3,7 +3,10 @@ import axios from 'axios';
 // Basic URL. 
 const ncNewsApi = axios.create({baseURL: 'https://be-nc-news-wz3p.onrender.com/api/'})
 
+
 // Functions. 
+
+// getArticles() 
 export async function getArticles() {
     try {
       //  const urlEnd = !query || query === "?category_name=All" ? '' : query
@@ -16,12 +19,23 @@ export async function getArticles() {
     }
 }
 
-// Functions. 
+// getArticleById()
 export async function getArticleById(articleId) {
     try {
         const response = await ncNewsApi.get(`/articles/${articleId}`)
 
         return response.data.article
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+export async function getCommentsByArticleId(articleId) {
+    try {
+        const response = await ncNewsApi.get(`/articles/${articleId}/comments`)
+
+        return response.data.comments
     }
     catch (err) {
         console.log(err)

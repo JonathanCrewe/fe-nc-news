@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header'
 import ArticleList from './components/ArticleList'
 import ArticleDetail from './components/ArticleDetail';
+import CommentList from './components/CommentList';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ArticleList/>}/>
         <Route path="/articles/:article_id" element={<ArticleDetail />}/>
+        <Route path="/articles/:article_id/comments" element={<CommentList />}/>
       </Routes>
       
 
