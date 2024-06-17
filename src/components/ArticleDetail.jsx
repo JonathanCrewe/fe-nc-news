@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import {getArticleById} from '../../api'
 import ArticleSummary from './ArticleSummary'
 import { useNavigate } from 'react-router-dom';
+import CommentList from './CommentList';
 
 
 function ArticleDetail() {
@@ -16,19 +17,15 @@ function ArticleDetail() {
         setArticle(article)
       }
 
-    function handleClick(event) {
-        event.preventDefault()
-        navigate(`/articles/${article.article_id}/comments`)
-    }
-
     // useEffect callback to invoke the get method. 
     useEffect( () => {getArticleSetState(article_id)}, [])
 
     return (
         <div className='article_detail'>
             <ArticleSummary key={article.article_id} article={article} />
-            <p>{article.body}</p>
-            <button onClick={handleClick}>View Comments</button>
+            <h2>{article.body}</h2>
+            {/* <button onClick={handleClick}>View Comments</button> */}
+            <CommentList />
         </div>
     )    
 }

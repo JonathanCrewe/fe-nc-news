@@ -31,6 +31,7 @@ export async function getArticleById(articleId) {
     }
 }
 
+//  getCommentsByArticleId()
 export async function getCommentsByArticleId(articleId) {
     try {
         const response = await ncNewsApi.get(`/articles/${articleId}/comments`)
