@@ -9,7 +9,6 @@ function ArticleList() {
     // Functions.  
     async function getArticlesSetState() {
         const articleResult = await getArticles()
-        console.log(articleResult)
         setArticles(articleResult)
       }
 

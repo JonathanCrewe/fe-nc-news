@@ -5,9 +5,7 @@ import ArticleList from './components/ArticleList'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
+   return (
     <>
       <Header/>
       <ArticleList/>
