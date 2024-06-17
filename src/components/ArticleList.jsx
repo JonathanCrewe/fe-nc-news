@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react'
-import getArticles from '../../api'
+import {getArticles} from '../../api'
 import ArticleSummary from './ArticleSummary'
-
 
 function ArticleList() {
     const [articles, setArticles] = useState([])
@@ -9,7 +8,6 @@ function ArticleList() {
     // Functions.  
     async function getArticlesSetState() {
         const articleResult = await getArticles()
-        console.log(articleResult)
         setArticles(articleResult)
       }
 
@@ -18,7 +16,7 @@ function ArticleList() {
 
     // HTML. 
     return (
-        <div className='article_list'>ArticleList
+        <div className='article_list'>
             <ul>
                 {articles.map( (article) => <ArticleSummary key={article.article_id} article={article} />)}
             </ul>

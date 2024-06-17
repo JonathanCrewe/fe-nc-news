@@ -28,3 +28,10 @@ li {
   padding: 10px;
   background-color: bisque;
 }
+
+.article_detail {
+  background-color: rgb(206, 205, 219);
+  border: solid;
+  margin: 10px;
+  padding: 10px;
+}
