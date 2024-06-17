@@ -4,7 +4,7 @@ import axios from 'axios';
 const ncNewsApi = axios.create({baseURL: 'https://be-nc-news-wz3p.onrender.com/api/'})
 
 // Functions. 
-async function getArticles() {
+export async function getArticles() {
     try {
       //  const urlEnd = !query || query === "?category_name=All" ? '' : query
         const response = await ncNewsApi.get(`/articles`)
@@ -16,4 +16,14 @@ async function getArticles() {
     }
 }
 
-export default getArticles
+// Functions. 
+export async function getArticleById(articleId) {
+    try {
+        const response = await ncNewsApi.get(`/articles/${articleId}`)
+
+        return response.data.article
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
