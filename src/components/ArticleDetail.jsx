@@ -17,6 +17,13 @@ function ArticleDetail() {
         setArticle(article)
       }
 
+    function handleVote(event) {
+        const newArticle = structuredClone(article)
+        newArticle.votes = Number(newArticle.votes) + Number(event.target.id)
+        setArticle(newArticle)
+        // ToDo - 
+    }
+
     // useEffect callback to invoke the get method. 
     useEffect( () => {getArticleSetState(article_id)}, [])
 
@@ -24,8 +31,8 @@ function ArticleDetail() {
         <div className='article_detail'>
             <ArticleSummary key={article.article_id} article={article} />
             <h2>{article.body}</h2>
-            {/* <button onClick={handleClick}>View Comments</button> */}
             <CommentList />
+            <button id="1" onClick={handleVote}>Vote UP</button><button id="-1" onClick={handleVote}>Vote Down</button>
         </div>
     )    
 }
