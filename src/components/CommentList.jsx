@@ -5,13 +5,14 @@ import '../css/Comment.css'
 
 
 function CommentList() {
-    // ToDo - ultimately allow to pick from DB or add actual sign-up/authentication functionality
+    // State. 
+    const [comments, setComments] = useState([])
+    const [inputValue, setInputValue] = useState('');
+
+     // ToDo - ultimately allow to pick from DB or add actual sign-up/authentication functionality
     const defaultUsername = 'grumpy19'
-    //let emptyCommentSubmitted = false
-    const [emptyCommentSubmitted, setEmptyCommentSubmitted] = useState(false)
 
     const {article_id}= useParams()
-    const [comments, setComments] = useState([])
 
     // Functions.  
     async function getCommentsSetState(articleId) {
@@ -23,15 +24,12 @@ function CommentList() {
         event.preventDefault()
         const commentBody = event.target[0].value
 
-        // Empty the textarea so we get the placeholder back / don't repeat the comment.
+        // Empty the textarea so we get the placeholder back / can't resubmit the comment.
         event.target[0].value = ''
+        setInputValue('')
 
         if (commentBody) {
-            setEmptyCommentSubmitted(false)
-
-             // ToDo - disable button?
-
-            // Save to DB and get unique key (comment_id)back. 
+             // Save to DB and get unique key (comment_id)back. 
             const returnedComment = await createComment(article_id, defaultUsername, commentBody) 
 
             // Add returned comment to list. 
@@ -39,13 +37,13 @@ function CommentList() {
             newCommentsList.unshift(returnedComment)
 
             setComments(newCommentsList)
-
-            // ToDo - re-enable button?
-        } else {
-            console.log('empty')
-            setEmptyCommentSubmitted(true)
         }
     }
+
+    function handleInputChange(event) {
+        setInputValue(event.target.value);
+    }
+
 
     // useEffect callback to invoke the get method. 
     useEffect( () => {getCommentsSetState(article_id)}, [])
@@ -56,9 +54,8 @@ function CommentList() {
             {/* ToDo - Use a comment component? 
             This covers use case to view comments but will need extending if further funtionality required*/}
             <form onSubmit={handleSubmit}>
-                <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment"/>
-                {emptyCommentSubmitted ? <div className='error'><h3><p>Error: Empty comment submitted</p></h3></div> : <p></p>}
-                <button type="submit">Submit Comment</button>
+                <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment" onChange={handleInputChange}/>
+                <button type="submit" disabled={!inputValue}>Submit Comment</button>
             </form>
             <ul>
                 {comments.map( (comment) => <li className='comment-list' key={comment.comment_id}>{comment.body}</li>)}
