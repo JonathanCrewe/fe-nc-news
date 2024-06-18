@@ -4,9 +4,8 @@ import {useParams} from 'react-router-dom'
 import '../css/Comment.css'
 
 
-function CommentList() {
+function CommentList({comments, setComments} ) {
     // State. 
-    const [comments, setComments] = useState([])
     const [inputValue, setInputValue] = useState('')
     const [isSendingComment, setIsSendingComment] = useState(false)
 
