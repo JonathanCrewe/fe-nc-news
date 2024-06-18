@@ -64,3 +64,8 @@ export async function createComment(articleId, username, comment) {
 
     return response.data.comment
 }
+
+// deleteComment()
+export async function deleteComment(commentId) {
+    return await ncNewsApi.delete(`/comments/${commentId}`)
+}
