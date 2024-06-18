@@ -1,11 +1,13 @@
 import {React, useEffect, useState} from 'react'
-import ArticleSummary from './ArticleSummary'
-import { getCommentsByArticleId } from '../../api'
-import { useParams } from 'react-router-dom'
+import {getCommentsByArticleId, createComment} from '../../api'
+import {useParams} from 'react-router-dom'
 import '../css/Comment.css'
 
 
 function CommentList() {
+    // ToDo - ultimately allow to pick from DB or add actual sign-up/authentication functionality
+    const defaultUsername = 'grumpy19'
+
     const {article_id}= useParams()
     const [comments, setComments] = useState([])
 
@@ -14,6 +16,28 @@ function CommentList() {
         const commentsForArticle = await getCommentsByArticleId(articleId)
         setComments(commentsForArticle)
       }
+    
+    async function handleSubmit(event) {
+        event.preventDefault()
+        const commentBody = event.target[0].value
+
+        if (commentBody) {
+             // ToDo - disable button?
+
+            // Save to DB and get unique key (comment_id)back. 
+            const returnedComment = await createComment(article_id, defaultUsername, commentBody) 
+
+            // Add returned comment to list. 
+            const newCommentsList = structuredClone(comments)
+            newCommentsList.unshift(returnedComment)
+
+            setComments(newCommentsList)
+
+            // ToDo - re-enable button?
+        } else {
+
+        }
+    }
 
     // useEffect callback to invoke the get method. 
     useEffect( () => {getCommentsSetState(article_id)}, [])
@@ -23,9 +47,15 @@ function CommentList() {
             <p><u>Comments</u></p>
             {/* ToDo - Use a comment component? 
             This covers use case to view comments but will need extending if further funtionality required*/}
+            <form onSubmit={handleSubmit}>
+                <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment"/>
+                <p></p>
+                <button type="submit">Submit Comment</button>
+            </form>
             <ul>
                 {comments.map( (comment) => <li className='comment-list' key={comment.comment_id}>{comment.body}</li>)}
             </ul>
+            
         </div>
     )
 }

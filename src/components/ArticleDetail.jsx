@@ -42,6 +42,7 @@ function ArticleDetail() {
             <h2>{article.body}</h2>
             <button id="1" onClick={handleVote}>Vote UP</button><button id="-1" onClick={handleVote}>Vote Down</button>
             {isError ? <div className='error'><h3><p>Error: Vote Could Not Be Saved To The Database</p></h3></div> : null}
+             {/* ToDo - add a view comments button to show/hide comments? Toggle button text, too.  */}
             <CommentList />
         </div>
     )    

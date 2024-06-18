@@ -51,3 +51,16 @@ export async function updateArticle(articleId, increment) {
 
         return response.data.article
 }
+
+// createComment()
+export async function createComment(articleId, username, comment) {
+    // Create a new comment. 
+    const newComment = {}
+    newComment.body =  comment
+    newComment.username = username
+
+    // Send it to the database.
+    const response = await ncNewsApi.post(`/articles/${articleId}/comments`, newComment)
+
+    return response.data.comment
+}
