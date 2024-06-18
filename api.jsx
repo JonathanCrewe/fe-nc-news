@@ -31,12 +31,25 @@ export async function getArticleById(articleId) {
     }
 }
 
-//  getCommentsByArticleId()
+// getCommentsByArticleId()
 export async function getCommentsByArticleId(articleId) {
     try {
         const response = await ncNewsApi.get(`/articles/${articleId}/comments`)
 
         return response.data.comments
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+// updateArticle()
+export async function updateArticle(articleId, increment) {
+    try {
+        const paramObj = {"inc_votes":  increment}
+        const response = await ncNewsApi.patch(`/articles/${articleId}`, paramObj)
+
+        return response.data.article
     }
     catch (err) {
         console.log(err)

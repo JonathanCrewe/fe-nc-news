@@ -1,15 +1,13 @@
 import {React, useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import {getArticleById} from '../../api'
+import {getArticleById, updateArticle} from '../../api'
 import ArticleSummary from './ArticleSummary'
-import { useNavigate } from 'react-router-dom';
 import CommentList from './CommentList';
 
 
 function ArticleDetail() {
     const {article_id} = useParams()
     const [article, setArticle] = useState({})
-    const navigate = useNavigate()
 
     // Functions.  
     async function getArticleSetState(articleId) {
@@ -19,9 +17,13 @@ function ArticleDetail() {
 
     function handleVote(event) {
         const newArticle = structuredClone(article)
-        newArticle.votes = Number(newArticle.votes) + Number(event.target.id)
+        const increment = Number(event.target.id)
+        newArticle.votes = Number(newArticle.votes) + increment
         setArticle(newArticle)
-        // ToDo - 
+        const articleFromDB = updateArticle(article_id, increment)
+        // ToDo - could setArticle again here to reflect new votes/comments from other users?
+        //        Might be confusing for user?
+        // ToDo - can a user vote multiple times? Consider disabling button after a single use
     }
 
     // useEffect callback to invoke the get method. 
