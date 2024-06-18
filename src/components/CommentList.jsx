@@ -7,7 +7,8 @@ import '../css/Comment.css'
 function CommentList() {
     // State. 
     const [comments, setComments] = useState([])
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('')
+    const [isSendingComment, setIsSendingComment] = useState(false)
 
      // ToDo - ultimately allow to pick from DB or add actual sign-up/authentication functionality
     const defaultUsername = 'grumpy19'
@@ -22,6 +23,7 @@ function CommentList() {
     
     async function handleSubmit(event) {
         event.preventDefault()
+        setIsSendingComment(true)
         const commentBody = event.target[0].value
 
         // Empty the textarea so we get the placeholder back / can't resubmit the comment.
@@ -38,6 +40,8 @@ function CommentList() {
 
             setComments(newCommentsList)
         }
+
+        setIsSendingComment(false)
     }
 
     function handleInputChange(event) {
@@ -54,7 +58,9 @@ function CommentList() {
             {/* ToDo - Use a comment component? 
             This covers use case to view comments but will need extending if further funtionality required*/}
             <form onSubmit={handleSubmit}>
-                <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment" onChange={handleInputChange}/>
+                {/* ToDo - is it possible to disable the textarea when isSendingComment === true? */}
+                <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment" onChange={handleInputChange} />
+                {isSendingComment ? <p>Sending your comment...</p> : null}
                 <button type="submit" disabled={!inputValue}>Submit Comment</button>
             </form>
             <ul>
