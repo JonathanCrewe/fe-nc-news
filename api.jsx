@@ -3,6 +3,7 @@ import axios from 'axios';
 // Basic URL. 
 const ncNewsApi = axios.create({baseURL: 'https://be-nc-news-wz3p.onrender.com/api/'})
 
+// ToDo - Remove try/catch blocks from all functions and handle errors where they are called from? Give better user feeback?
 
 // Functions. 
 
@@ -45,13 +46,8 @@ export async function getCommentsByArticleId(articleId) {
 
 // updateArticle()
 export async function updateArticle(articleId, increment) {
-    try {
         const paramObj = {"inc_votes":  increment}
         const response = await ncNewsApi.patch(`/articles/${articleId}`, paramObj)
 
         return response.data.article
-    }
-    catch (err) {
-        console.log(err)
-    }
 }
