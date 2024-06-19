@@ -5,13 +5,11 @@ import ArticleSummary from './ArticleSummary'
 function ArticleList() {
     const [articles, setArticles] = useState([])
     const [topics, setTopics] = useState([])
-   // const [selectedTopic, setSeletedTopic] = useState()
 
     // Functions. 
     async function getDataSetState() {
         const returnedTopics = await getTopics()
         setTopics([{slug: 'All', description: 'All topics'}, ...returnedTopics])
-      //  setSeletedTopic('All')
 
         const articleResult = await getArticles()
         setArticles(articleResult)
