@@ -3,7 +3,7 @@ import '../css/Comment.css'
 import { deleteComment } from '../../api'
 
 function CommentCard({comment, defaultUsername,comments, setComments}) {
-    const [isDeleting, setIsDeleting] = useState(true)
+    const [isDeleting, setIsDeleting] = useState(false)
 
   const isOwnedComment = comment.author === defaultUsername 
 
