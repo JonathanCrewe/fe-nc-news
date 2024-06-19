@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react'
 import {getCommentsByArticleId, createComment} from '../../api'
 import {useParams} from 'react-router-dom'
-import '../css/Comment.css'
+import CommentCard from './CommentCard'
 
 
 function CommentList({comments, setComments} ) {
@@ -54,8 +54,6 @@ function CommentList({comments, setComments} ) {
     return (
         <div >
             <p><u>Comments</u></p>
-            {/* ToDo - Use a comment component? 
-            This covers use case to view comments but will need extending if further funtionality required*/}
             <form onSubmit={handleSubmit}>
                 {/* ToDo - is it possible to disable the textarea when isSendingComment === true? */}
                 <textarea type="text" cols="120" placeholder="Add your comment..." rows="5" name="newComment" onChange={handleInputChange} />
@@ -63,7 +61,7 @@ function CommentList({comments, setComments} ) {
                 <button type="submit" disabled={!inputValue}>Submit Comment</button>
             </form>
             <ul>
-                {comments.map( (comment) => <li className='comment-list' key={comment.comment_id}>{comment.body}</li>)}
+                {comments.map( (comment) => <CommentCard key={comment.comment_id} comment={comment} comments={comments} setComments={setComments} defaultUsername={defaultUsername}/>)}
             </ul>
             
         </div>
