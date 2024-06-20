@@ -6,11 +6,20 @@ const ncNewsApi = axios.create({baseURL: 'https://be-nc-news-wz3p.onrender.com/a
 // ToDo - Remove try/catch blocks from all functions and handle errors where they are called from? Give better user feeback?
 
 // Functions. 
-
 // getArticles() 
-export async function getArticles(column, value) {
+export async function getArticles(column, columnValue, sortByColumn, sortByOrder) {
     try {
-        const urlEnd = !column || value === 'All' ? '' : `?${column}=${value}`
+        let urlEnd = !column || columnValue === 'All' ? '' : `?${column}=${columnValue}`
+        if (urlEnd) {
+            urlEnd = urlEnd + '&'
+        } else {
+            urlEnd = urlEnd + '?'
+        }
+
+        const sortByPart = sortByColumn ? `&sort_by=${sortByColumn}` : null
+        const sortOrderPart = sortByOrder ? `&order=${sortByOrder}` : null
+        urlEnd = urlEnd + sortByPart + sortOrderPart
+        
         const response = await ncNewsApi.get(`/articles${urlEnd}`)
 
         return response.data.articles
