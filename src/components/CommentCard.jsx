@@ -3,27 +3,23 @@ import '../css/Comment.css'
 import { deleteComment } from '../../api'
 
 function CommentCard({comment, defaultUsername,comments, setComments}) {
-    const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const isOwnedComment = comment.author === defaultUsername 
 
   // Functions. 
   async function handleClick(event) {
-    // ToDo - this fails to set the button to disabled while processing. I can't seem to fix it. 
-    // Why can't I just set the event.target.dasabled? This should be easy!
-    setIsDeleting(true)
+    setIsDeleting(true);
 
-    // Optimistically remove from list.
-    const newCommentList = comments.filter( (element) => element.comment_id !== comment.comment_id)
-    setComments(newCommentList)
+    // Remove from DB.
+    await deleteComment(comment.comment_id);
 
-    // Remove from DB. 
-    await deleteComment(comment.comment_id)
-    setIsDeleting(false)
+    // Remove from comment list.
+    const newCommentList = comments.filter((element) => element.comment_id !== comment.comment_id);
+    setComments(newCommentList);
+
+    setIsDeleting(false);
   }
-
-  // ToDo - this disables botton but won't ever get re-enabled.
-  //useEffect( () => {setIsDeleting(!isDeleting)}, [comments])
 
   // HTML. 
   return (
