@@ -2,7 +2,8 @@ import {React, useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import {getArticleById, updateArticle} from '../../api'
 import ArticleSummary from './ArticleSummary'
-import CommentList from './CommentList';
+import CommentList from './CommentList'
+import ErrorPage from './ErrorPage'
 
 
 function ArticleDetail() {
@@ -10,11 +11,18 @@ function ArticleDetail() {
     const [article, setArticle] = useState({})
     const [isError, setIsError] = useState(false)
     const [comments, setComments] = useState([])
+    const [articleError, setArticleError] = useState('')
 
     // Functions.  
     async function getArticleSetState(articleId) {
-        const article = await getArticleById(articleId)
-        setArticle(article)
+        try {
+            const article = await getArticleById(articleId)
+            setArticle(article)
+        } catch(error) {
+            if (error.response.ststus = 404) {
+                setArticleError('Article not found')
+            }
+        }
       }
 
     async function handleVote(event) {
@@ -37,7 +45,11 @@ function ArticleDetail() {
     // useEffect callback to invoke the get method. 
     useEffect( () => {getArticleSetState(article_id)}, [])
 
-    return (
+    return articleError? (
+        <ErrorPage errorMessage={articleError}/>
+    )
+    :
+    (
         <div className='article_detail'>
             <ArticleSummary key={article.article_id} article={article} comments={comments}/>
             <h2>{article.body}</h2>
