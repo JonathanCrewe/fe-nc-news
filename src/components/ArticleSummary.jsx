@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 function ArticleSummary({article, comments}) {
-    const linkPath = `/articles/${article.article_id}`
+    const linkPath = `/article/${article.article_id}`
 
     return (
         <div className='article_summary'>

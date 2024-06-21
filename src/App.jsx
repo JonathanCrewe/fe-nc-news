@@ -14,7 +14,9 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<ArticleList/>}/>
-        <Route path="/articles/:article_id" element={<ArticleDetail />}/>
+        <Route path="/articles" element={<ArticleList/>}/>
+        <Route path="/articles/:topicParam" element={<ArticleList/>}/>
+        <Route path="/article/:article_id" element={<ArticleDetail />}/>
         <Route path="/*" element={<ErrorPage errorMessage="Oops! You've navigated to a non-existent page."/>} />
       </Routes>
       
