@@ -1,14 +1,21 @@
 import { React, useState, useEffect } from 'react'
 import {getArticles, getTopics} from '../../api'
 import ArticleSummary from './ArticleSummary'
+import { useParams } from 'react-router-dom'
 
 
 function ArticleList() {
+    const {topicParam} = useParams()
+    console.log(topicParam)
+
     const [articles, setArticles] = useState([])
     const [topics, setTopics] = useState([])
-    const [selectedTopic, setSelectedTopic] = useState('All')
+    const [selectedTopic, setSelectedTopic] = useState(topicParam? topicParam : 'All')
     const [selectedSortBy, setSelectedSortBy] = useState('created_at')
     const [selectedSortOrder, setSelectedSortOrder] = useState('DESC')
+
+    
+    
 
     // Functions. 
     // Mounting function. 
@@ -57,8 +64,10 @@ function ArticleList() {
         <div className='article_list'>
             <p>
                 <label htmlFor="topics">Topics: </label>
-                <select id="topics" onChange={handleTopicChange}>
-                    {topics.map( (topic) => <option value={topic.slug} key={topic.slug}>{topic.slug}</option>)}
+                <select id="topics" onChange={handleTopicChange} value={topicParam}>
+                    {topics.map( (topic) => <option value={topic.slug} key={topic.slug} >
+                                                {topic.slug}
+                                            </option>)})
                 </select>
             </p>
 
