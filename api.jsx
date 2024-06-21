@@ -31,14 +31,8 @@ export async function getArticles(column, columnValue, sortByColumn, sortByOrder
 
 // getArticleById()
 export async function getArticleById(articleId) {
-    try {
         const response = await ncNewsApi.get(`/articles/${articleId}`)
-
         return response.data.article
-    }
-    catch (err) {
-        console.log(err)
-    }
 }
 
 // getCommentsByArticleId()

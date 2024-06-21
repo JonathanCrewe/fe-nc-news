@@ -14,7 +14,6 @@ function ArticleSummary({article, comments}) {
                 </Link>
             </h2>
             <p>By: {article.author}</p>
-            {/* <p>Comments: {comments.length} | Votes: {article.votes}</p> */}
             <p>Comments: {comments ? comments.length : article.comment_count} | Votes: {article.votes}</p>
             </li>
         </div>
