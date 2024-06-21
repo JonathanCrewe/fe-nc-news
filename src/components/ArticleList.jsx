@@ -46,7 +46,7 @@ function ArticleList() {
     function handleTopicChange(event) {
        const newTopic = event.target.value
        navigate(`/articles/${newTopic === 'All'? '' : newTopic}`)
-       setSelectedTopic( event.target.value)
+       setSelectedTopic(newTopic)
     }
 
     function handleSortByChange(event) {
