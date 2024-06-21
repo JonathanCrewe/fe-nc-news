@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from 'react'
 import {getArticles, getTopics} from '../../api'
 import ArticleSummary from './ArticleSummary'
-import { useParams } from 'react-router-dom'
+import { redirect, useNavigate, useParams } from 'react-router-dom'
 
 
 function ArticleList() {
     const {topicParam} = useParams()
-    console.log(topicParam)
+    const navigate = useNavigate()
 
     const [articles, setArticles] = useState([])
     const [topics, setTopics] = useState([])
@@ -43,15 +43,17 @@ function ArticleList() {
     }
 
     // Handler functions. 
-    async function handleTopicChange(event) {
-        setSelectedTopic( event.target.value)
+    function handleTopicChange(event) {
+       const newTopic = event.target.value
+       navigate(`/articles/${newTopic === 'All'? '' : newTopic}`)
+       setSelectedTopic( event.target.value)
     }
 
-    async function handleSortByChange(event) {
+    function handleSortByChange(event) {
        setSelectedSortBy(event.target.value)
     }
 
-    async function handleSortOrderChange(event) {
+    function handleSortOrderChange(event) {
         setSelectedSortOrder(event.target.value)
     }
 
